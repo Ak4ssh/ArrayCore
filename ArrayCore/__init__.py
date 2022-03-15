@@ -14,7 +14,7 @@ if os.path.exists(".env"):
 __version__ = "v0.0.1"
 
 # -------------CONFIGS--------------------
-API_ID = int(os.getenv("API_ID", ""))
+API_ID = os.getenv("API_ID", "")
 API_HASH = os.getenv("API_HASH", "")
 ALIVE_PIC = os.getenv("ALIVE_PIC", "")
 BOT_TOKEN = os.getenv("BOT_TOKEN", None)
