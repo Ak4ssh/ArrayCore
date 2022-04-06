@@ -56,6 +56,7 @@ from .. import (call_py1, call_py2, call_py3, call_py4, call_py5, call_py6, call
 
 aud_list = [
     "./ArrayCore/Audio/VID1.mp4",
+]
 
 @vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vraid"], prefixes=HNDLR))
 async def vplay(client, e: Message):
