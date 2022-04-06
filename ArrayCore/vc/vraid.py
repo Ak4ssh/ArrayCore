@@ -1,199 +1,188 @@
+import asyncio
+import datetime
+import logging
 import os
 import re
-import asyncio
-from pyrogram import Client
-from config import bot, call_py, HNDLR, contact_filter, GRPPLAY
-from pyrogram import filters
+import sys
+
+from asyncio import sleep
+from random import choice
+from pyrogram import Client, filters
 from pyrogram.types import Message
-
 from pytgcalls import StreamType
-from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
-from pytgcalls.types.input_streae.quality import (
-    HighQualityAudio,
-    HighQualityVideo,
-    LowQualityVideo,
-    MediumQualityVideo,
-)
-from youtubesearchpython import VideosSearch
+from pytgcalls.types.input_stream import InputVideoStream, AudioVideoPiped
+from pytgcalls.types.input_stream.quality import (HighQualityAudio, HighQualityVideo,
+                                                  LowQualityVideo, MediumQualityVideo)
 
-from utils import CHAT_TITLE, gen_thumb
-from plugins.vc.queues import QUEUE, add_to_queue, get_queue
+from ArrayCore.vc.queues import QUEUE, add_to_queue, get_queue, clear_queue
+from pytgcalls.types.input_stream import VideoParameters
 
+from .. import (call_py1, call_py2, call_py3, call_py4,
+                    call_py5, call_py6, call_py7, call_py8,
+                    call_py9, call_py10, call_py11, call_py12,
+                    call_py13, call_py14, call_py15, vcbot, 
+                    HNDLR, SUDO_USERS, Venom1)
 
-# video player
-def ytsearch(query):
-    try:
-        search = VideosSearch(query, limit=1).result()
-        data = search["result"][0]
-        songname = data["title"]
-        url = data["link"]
-        duration = data["duration"]
-        thumbnail = f"https://i.ytimg.com/vi/{data['id']}/hqdefault.jpg"
-        return [songname, url, duration, thumbnail]
-    except Exception as e:
-        print(e)
-        return 0
-
-
-async def ytdl(link):
-    proc = await asyncio.create_subprocess_exec(
-        "yt-dlp",
-        "-g",
-        "-f",
-        # CHANGE THIS BASED ON WHAT YOU WANT
-        "best[height<=?720][width<=?1280]",
-        f"{link}",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    stdout, stderr = await proc.communicate()
-    if stdout:
-        return 1, stdout.decode().split("\n")[0]
-    else:
-        return 0, stderr.decode()
-
-from .. import (call_py1, call_py2, call_py3, call_py4, call_py5, call_py6, call_py7, call_py8, call_py9, call_py10, call_py11, call_py12, call_py13, call_py14, call_py15, vcbot, HNDLR, SUDO_USERS, Venom1)
+logging.basicConfig(level=logging.INFO)
 
 aud_list = [
-    "./ArrayCore/Audio/VID1.mp4",
+    "./ArrayCore/Audio/AUD1.mp3",
+    "./ArrayCore/Audio/AUD2.mp3",
+    "./ArrayCore/Audio/AUD3.mp3",
+    "./ArrayCore/Audio/AUD4.mp3",
+    "./ArrayCore/Audio/AUD5.mp3",
+    "./ArrayCore/Audio/AUD6.mp3",
+    "./ArrayCore/Audio/AUD7.mp3",
+    "./ArrayCore/Audio/AUD8.mp3",
+    "./ArrayCore/Audio/AUD9.mp3",
+    "./ArrayCore/Audio/AUD10.mp3",
 ]
 
-@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vraid"], prefixes=HNDLR))
-async def vplay(client, e: Message):
- gid = e.chat.id 
- uid = e.from_user.id 
- if gid == uid: 
-     inp = e.text[8:]
-     chat_ = await Venom1.get_chat(inp) 
-     chat_id = chat_.id 
- else: 
-     chat_id = gid 
- aud = choice(aud_list)
-     if replied:
-         if replied.video or replied.document:
-            await e.delete()
-            huehue = await replied.reply("**🔄 Processing**")
-            dl = await replied.download()
-            link = replied.link
-            if len(e.command) < 2:
-                Q = 720
-            else:
-                pq = e.text.split(None, 1)[1]
-                if pq == "720" or "480" or "360":
-                    Q = int(pq)
-                else:
-                    Q = 720
-                    await huehue.edit(
-                        "`Only 720p, 480p, 360p Allowed` \ n` Now Streaming in 720p`"
-                    )
 
-            if replied.video:
-                songname = replied.video.file_name[:35] + "..."
-            elif replied.document:
-                songname = replied.document.file_name[:35] + "..."
-
-            if chat_id in QUEUE:
-                pos = add_to_queue(chat_id, songname, dl, link, "Video", Q)
-                await huehue.delete()
-                # await e.reply_to_message.delete()
-                await e.reply_photo(
-                    photo="https://telegra.ph/file/d6f92c979ad96b2031cba.png",
-                    caption=f"""
-**#⃣ Video Queued To  {pos}
-🏷️ Title: [{songname}]({link})
-💬 Chat ID: {chat_id}
-🎧 Requested by: {e.from_user.mention}**
-""",
-                )
-            else:
-                if Q == 720:
-                    hmmm = HighQualityVideo()
-                elif Q == 480:
-                    hmmm = MediumQualityVideo()
-                elif Q == 360:
-                    hmmm = LowQualityVideo()
-                await call_py.join_group_call(
-                    chat_id,
-                    AudioVideoPiped(dl, HighQualityAudio(), hmmm),
-                    stream_type=StreamType().pulse_stream,
-                )
-                add_to_queue(chat_id, songname, dl, link, "Video", Q)
-                await huehue.delete()
-                # await e.reply_to_message.delete()
-                await e.reply_photo(
-                    photo="https://telegra.ph/file/6213d2673486beca02967.png",
-                    caption=f"""
-**▶ Start Playing Videos
-🏷️ Title: [{songname}]({link})
-💬 Chat ID: {chat_id}
-🎧 Requested by: {e.from_user.mention}**
-""",
-                )
-
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vcraid"], prefixes=HNDLR))
+async def vcraid(_, e: Message):
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
     else:
-        if len(e.command) < 2:
-            await e.reply(
-                "**Reply to Audio File or provide something for Searching ...**"
-            )
+         chat_id = gid
+    aud = choice(aud_list)
+    if inp:
+        TheVenomXD = await e.reply_text("**Starting VC raid**")
+        link = f"https://itshellboy.tk/{aud[1:]}"
+        dl = aud
+        songname = aud[18:]
+        if chat_id in QUEUE:
+            pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+            await TheVenomXD.delete()
+            await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** #{pos}")
         else:
-            await e.delete()
-            huehue = await e.reply("**🔎 Searching...")
-            query = e.text.split(None, 1)[1]
-            search = ytsearch(query)
-            Q = 720
-            hmmm = HighQualityVideo()
-            if search == 0:
-                await huehue.edit(
-                    "**Didn't Find Anything for the Given Query🤷‍♀️**"
-                )
-            else:
-                songname = search[0]
-                title = search[0]
-                url = search[1]
-                duration = search[2]
-                thumbnail = search[3]
-                userid = e.from_user.id
-                srrf = e.chat.title
-                ctitle = await CHAT_TITLE(srrf)
-                thumb = await gen_thumb(thumbnail, title, userid, ctitle)
-                hm, ytlink = await ytdl(url)
-                if hm == 0:
-                    await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{ytlink}`")
-                else:
-                    if chat_id in QUEUE:
-                        pos = add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
-                        await huehue.delete()
-                        # await e.reply_to_message.delete()
-                        await e.reply_photo(
-                            photo=f"{thumb}",
-                            caption=f"""
-**#⃣ Video Queued To {pos}
-🏷️ Title: [{songname}]({url})
-⏱️ Duration: {duration}
-💬 Chat ID: {chat_id}
-🎧 Requested by: {e.from_user.mention}**
-""",
-                        )
-                    else:
-                        try:
-                            await call_py.join_group_call(
-                                chat_id,
-                                AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
-                                stream_type=StreamType().pulse_stream,
-                            )
-                            add_to_queue(chat_id, songname, ytlink, url, "Video", Q)
-                            await huehue.delete()
-                            # await e.reply_to_message.delete()
-                            await e.reply_photo(
-                                photo=f"{thumb}",
-                                caption=f"""
-**▶ Start Playing Videos
-🏷️ Title: [{songname}]({url})
-⏱️ Duration: {duration}
-💬 Chat ID: {chat_id}
-🎧 Requested by: {e.from_user.mention}**
-""",
-                            )
-                        except Exception as ep:
-                            await huehue.edit(f"`{ep}`")
+            if call_py1:
+                await call_py1.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py2:
+                await call_py2.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py3:
+                await call_py3.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py4:
+                await call_py4.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py5:
+                await call_py5.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py6:
+                await call_py6.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py7:
+                await call_py7.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            if call_py8:
+                await call_py8.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+            add_to_queue(chat_id, songname, dl, link, "Audio", 0)
+            await TheVenomXD.delete()
+            await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** Ongoing Raid")
+
+
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["raidend"], prefixes=HNDLR))
+async def ping(_, e: Message):
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
+    else:
+         chat_id = gid
+    if chat_id in QUEUE:
+        try:
+            if call_py1:
+                await call_py1.leave_group_call(chat_id)
+            if call_py2:
+                await call_py2.leave_group_call(chat_id)
+            if call_py3:
+                await call_py3.leave_group_call(chat_id)
+            if call_py4:
+                await call_py4.leave_group_call(chat_id)
+            if call_py5:
+                await call_py5.leave_group_call(chat_id)
+            if call_py6:
+                await call_py6.leave_group_call(chat_id)
+            if call_py7:
+                await call_py7.leave_group_call(chat_id)
+            if call_py8:
+                await call_py8.leave_group_call(chat_id)
+            clear_queue(chat_id)
+            await e.reply_text("**VC Raid Ended!**")
+        except Exception as ex:
+            await e.reply_text(f"**ERROR** \n`{ex}`")
+    else:
+        await e.reply_text("**No ongoing raid!**")
+
+
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["raidpause"], prefixes=HNDLR))
+async def ping(_, e: Message):
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
+    else:
+         chat_id = gid
+    if chat_id in QUEUE:
+        try:
+            if call_py1:
+                await call_py1.pause_stream(chat_id)
+            if call_py2:
+                await call_py2.pause_stream(chat_id)
+            if call_py3:
+                await call_py3.pause_stream(chat_id)
+            if call_py4:
+                await call_py4.pause_stream(chat_id)
+            if call_py5:
+                await call_py5.pause_stream(chat_id)
+            if call_py6:
+                await call_py6.pause_stream(chat_id)
+            if call_py7:
+                await call_py7.pause_stream(chat_id)
+            if call_py8:
+                await call_py8.pause_stream(chat_id)
+            await e.reply_text(f"**VC Raid Paued In:** {chat_.title}")
+        except Exception as e:
+            await e.reply_text(f"**ERROR** \n`{e}`")
+    else:
+        await e.reply_text("**No ongoing raid!**")
+
+
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["raidresume"], prefixes=HNDLR))
+async def ping(_, e: Message):
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
+    else:
+         chat_id = gid
+    if chat_id in QUEUE:
+        try:
+            if call_py1:
+                await call_py1.resume_stream(chat_id)
+            if call_py2:
+                await call_py2.resume_stream(chat_id)
+            if call_py3:
+                await call_py3.resume_stream(chat_id)
+            if call_py4:
+                await call_py4.resume_stream(chat_id)
+            if call_py5:
+                await call_py5.resume_stream(chat_id)
+            if call_py6:
+                await call_py6.resume_stream(chat_id)
+            if call_py7:
+                await call_py7.resume_stream(chat_id)
+            if call_py8:
+                await call_py8.resume_stream(chat_id)
+            await e.reply_text(f"**VC Raid Resumed In {chat_.title}**")
+        except Exception as e:
+            await e.reply_text(f"**ERROR** \n`{e}`")
+    else:
+        await e.reply_text("**No raid is currently paused!**")
 
