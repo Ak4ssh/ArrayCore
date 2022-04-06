@@ -1,0 +1,93 @@
+{
+    "name": "• ArrayCore : 2022 - 2022 •",
+    "description": "- A Multi Clients telegram Group voice Call Userbots. ArrayCore Having Many Features.",
+    "logo": "https://telegra.ph/file/b918befe58de65045878c.jpg",
+    "keywords": [
+        "Telegram",
+        "VCBot",
+        "MusicPlayer",
+        "ArrayCore",
+        "vcraid"
+    ],
+    "repository": "https://github.com/Desinobita",
+    "env": {
+        "SESSION": {
+            "description": "Pyrogram String Session.",
+            "required": true
+        },
+        "API_ID": {
+            "description": "Api Id Get this value from my.telegram.org",
+            "required": true
+        },
+        "SESSION2": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION3": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION4": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION5": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION6": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION7": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "SESSION8": {
+            "description": "Pyrogram String Session",
+            "required": false
+        },
+        "ALIVE_PIC": {
+            "description": "Alive Pic or video (Telegraph link)",
+            "required": false
+        },
+        "API_HASH": {
+            "description": "Api hash get this value from my.telegram.org",
+            "required": true
+        },
+        "HNDLR": {
+            "description": "cmd Handler | Default (!)",
+            "value": "!",
+            "required": true
+        },
+        "GROUP_MODE": {
+            "description": "Anyone can play, if set to True. Set it to False to restrict play access to Sudo Users/Contacts only",
+            "value": "True",
+            "required": true 
+        },
+        "BOT_TOKEN": {
+            "description": "Required To Give Commands In Bot Pm",
+            "required": true
+        },
+        "SUDO_USERS": {
+            "description": "Sudo Users id space by space (Users who can control bot)",
+            "required": true 
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    },
+    "stack": "container"
+}
