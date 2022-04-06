@@ -52,21 +52,21 @@ async def vcraid(_, e: Message):
             await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** #{pos}")
         else:
             if call_py1:
-                await call_py1.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py1.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py2:
-                await call_py2.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py2.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py3:
-                await call_py3.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py3.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py4:
-                await call_py4.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py4.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py5:
-                await call_py5.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py5.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py6:
-                await call_py6.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py6.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py7:
-                await call_py7.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py7.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             if call_py8:
-                await call_py8.join_group_call(chat_id, stream_video(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
+                await call_py8.join_group_call(chat_id, InputVideoStream(dl), VideoParameters(width=1280, height=720, frame_rate=20), stream_type=StreamType().pulse_stream)
             add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             await TheVenomXD.delete()
             await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** Ongoing Raid")
