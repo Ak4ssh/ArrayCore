@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import Client
 from config import bot, call_py, HNDLR, contact_filter, GRPPLAY
 from pyrogram import filters
-from pyrograe.types import Message
+from pyrogram.types import Message
 
 from pytgcalls import StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
