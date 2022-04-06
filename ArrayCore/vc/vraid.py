@@ -69,8 +69,8 @@ async def vplay(client, e: Message):
  else: 
      chat_id = gid 
  aud = choice(aud_list)
-    if replied:
-        if replied.video or replied.document:
+     if replied:
+         if replied.video or replied.document:
             await e.delete()
             huehue = await replied.reply("**🔄 Processing**")
             dl = await replied.download()
