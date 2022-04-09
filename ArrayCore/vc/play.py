@@ -68,7 +68,7 @@ async def ping(_, e: Message):
         chat_id = chat_.id
     else:
          chat_id = gid
-    if replied:
+    if replied or inp:
         if replied.audio or replied.voice:
             await e.delete()
             TheVenomXD = await replied.reply_text("**Transcoding Mp3...**")
