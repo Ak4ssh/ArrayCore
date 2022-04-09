@@ -60,6 +60,14 @@ async def ytdl(link):
 async def ping(_, e: Message):
     replied = e.reply_to_message
     chat_id = e.chat.id
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
+    else:
+         chat_id = gid
     if replied:
         if replied.audio or replied.voice:
             await e.delete()
