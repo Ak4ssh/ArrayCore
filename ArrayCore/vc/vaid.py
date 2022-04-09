@@ -68,7 +68,7 @@ async def vcraid(_, e: Message):
                             frame_rate=20,
                         ),
                     ),
-                    stream_type=StreamType().local_stream,
+                    stream_type=StreamType().pulse_stream,
                 )
                 await msg.edit("**Started Video Stream!**")
                 await idle()
