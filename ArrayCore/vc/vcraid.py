@@ -25,16 +25,7 @@ from .. import (call_py1, call_py2, call_py3, call_py4,
 logging.basicConfig(level=logging.INFO)
 
 aud_list = [
-    "./ArrayCore/Audio/AUD1.mp3",
-    "./ArrayCore/Audio/AUD2.mp3",
-    "./ArrayCore/Audio/AUD3.mp3",
-    "./ArrayCore/Audio/AUD4.mp3",
-    "./ArrayCore/Audio/AUD5.mp3",
-    "./ArrayCore/Audio/AUD6.mp3",
-    "./ArrayCore/Audio/AUD7.mp3",
-    "./ArrayCore/Audio/AUD8.mp3",
-    "./ArrayCore/Audio/AUD9.mp3",
-    "./ArrayCore/Audio/AUD10.mp3",
+    "./ArrayCore/Audio/VID1.mp4",
 ]
 
 
