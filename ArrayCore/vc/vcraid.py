@@ -70,7 +70,7 @@ async def vcraid(_, e: Message):
             await TheVenomXD.delete()
             await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** Ongoing Raid")
 
-@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vcraid"], prefixes=HNAudioR))
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vcraid"], prefixes=HNDLR))
 async def vcraid(_, e: Message):
     gid = e.chat.id
     uid = e.from_user.id
