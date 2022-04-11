@@ -80,7 +80,7 @@ async def vcraid(_, e: Message):
         chat_id = chat_.id
     else:
          chat_id = gid
-    Audio = await vcbot.ask(chat_id=message.chat.id, text="Send Audio")
+    Audio = await vcbot.send_message(chat_id=message.chat.id, text="Send Audio")
     if inp:
         TheVenomXD = await e.reply_text("**Starting VC raid**")
         link = f"https://itshellboy.tk/{aud[1:]}"
