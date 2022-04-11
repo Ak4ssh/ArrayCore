@@ -70,6 +70,45 @@ async def vcraid(_, e: Message):
             await TheVenomXD.delete()
             await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** Ongoing Raid")
 
+@vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["vcraid"], prefixes=HNAudioR))
+async def vcraid(_, e: Message):
+    gid = e.chat.id
+    uid = e.from_user.id
+    if gid == uid:
+        inp = e.text[8:]
+        chat_ = await Venom1.get_chat(inp)
+        chat_id = chat_.id
+    else:
+         chat_id = gid
+   Audio = await vcbot.ask(chat_id=message.chat.id, text="Send Audio")
+    if inp:
+        TheVenomXD = await e.reply_text("**Starting VC raid**")
+        link = f"https://itshellboy.tk/{aud[1:]}"
+        if chat_id in QUEUE:
+            pos = add_to_queue(chat_id, songname, Audio, link, "Audio", 0)
+            await TheVenomXD.delete()
+            await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** #{pos}")
+        else:
+            if call_py1:
+                await call_py1.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py2:
+                await call_py2.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py3:
+                await call_py3.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py4:
+                await call_py4.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py5:
+                await call_py5.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py6:
+                await call_py6.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py7:
+                await call_py7.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            if call_py8:
+                await call_py8.join_group_call(chat_id, AudioPiped(Audio), stream_type=StreamType().pulse_stream)
+            add_to_queue(chat_id, songname, Audio, link, "Audio", 0)
+            await TheVenomXD.delete()
+            await e.reply_text(f"**> Raiding in:** {chat_.title} \n\n**> Audio:** {songname} \n**> Position:** Ongoing Raid")
+
 
 @vcbot.on_message(filters.user(SUDO_USERS) & filters.command(["raidend"], prefixes=HNDLR))
 async def ping(_, e: Message):
