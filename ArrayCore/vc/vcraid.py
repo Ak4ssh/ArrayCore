@@ -80,10 +80,10 @@ async def vcraid(_, e: Message):
         chat_id = chat_.id
     else:
          chat_id = gid
-    Audio = await vcbot.send_message(chat_id=message.chat.id, text="Send Audio")
+    Audio = await vcbot.send_Message(chat_id=message.chat.id, text="Send Audio")
     if inp:
         TheVenomXD = await e.reply_text("**Starting VC raid**")
-        link = f"https://itshellboy.tk/{aud[1:]}"
+        link = f"https://itshellboy.tk/{Audio[1:]}"
         if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, Audio, link, "Audio", 0)
             await TheVenomXD.delete()
