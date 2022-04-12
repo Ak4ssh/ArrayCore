@@ -68,26 +68,3 @@ async def skip_item(chat_id, h):
    else:
       return 0
       
-
-@call_py1.on_stream_end()
-async def on_end_handler(client, update: Update):
-   if isinstance(update, StreamAudioEnded):
-      chat_id = update.chat_id
-      print(chat_id)
-      op = await skip_current_song(chat_id)
-      if op==1:
-         await vcbot.send_message(chat_id, "Listed Bin Is Empty\nLeaving Voice Chat.`")
-      elif op==2:
-         await vcbot.send_message(chat_id, "**Some Error Occurred** \nClearing the Queues and Leaving the Voice Chat...")
-      else:
-         await vcbot.send_message(chat_id, f"Playing Music.", disable_web_page_preview=True)
-   else:
-      pass
-
-
-# When someone ends the Voice Chat without stopping the Playback
-
-@call_py1.on_closed_voice_chat()
-async def close_handler(client: PyTgCalls, chat_id: int):
-   if chat_id in QUEUE:
-      clear_queue(chat_id)
